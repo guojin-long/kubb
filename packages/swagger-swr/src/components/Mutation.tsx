@@ -172,7 +172,7 @@ export function Mutation({ factory, Template = defaultTemplates.default }: Props
 
   const hook = {
     name: 'useSWRMutation',
-    generics: [...resultGenerics, client.withQueryParams ? '[typeof url, typeof params] | null' : 'typeof url | null'].join(', '),
+    generics: [...resultGenerics, client.withQueryParams ? '[typeof url, typeof params] | null' : 'typeof url | null',`${factory.name}["request"]`].join(', '),
   }
 
   return (
@@ -182,7 +182,6 @@ export function Mutation({ factory, Template = defaultTemplates.default }: Props
       client={client}
       hook={hook}
       params={params.toString()}
-      returnType={`SWRMutationResponse<${resultGenerics.join(', ')}>`}
       dataReturnType={dataReturnType}
     />
   )
