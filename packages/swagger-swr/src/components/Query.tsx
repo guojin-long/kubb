@@ -1,5 +1,5 @@
 import { FunctionParams, URLPath } from '@kubb/core/utils'
-import { Parser, File, Function, useApp } from '@kubb/react'
+import { Parser, File, Function, Text, useApp } from '@kubb/react'
 import { pluginTsName } from '@kubb/swagger-ts'
 import { useOperation, useOperationManager } from '@kubb/plugin-oas/hooks'
 import { getASTParams, getComments } from '@kubb/plugin-oas/utils'
@@ -196,10 +196,15 @@ export function Query({ factory, Template = defaultTemplates.default, QueryOptio
     queryOptions: `${queryOptionsName}<${queryOptionsGenerics.join(', ')}>(${queryParams.toString()})`,
   }
 
+  const fetcherUrl =
+  factory.name.charAt(0).toLowerCase() + factory.name.slice(1) + "FetcherUrl";
+
   return (
     <>
       <QueryOptions factory={factory} Template={QueryOptionsTemplate} dataReturnType={dataReturnType} />
-
+      <Text>
+        export const {fetcherUrl} = "{client.path.path}";
+      </Text>
       <Template
         name={name}
         generics={generics.toString()}
